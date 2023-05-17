@@ -4,7 +4,7 @@ import "./App.css";
 
 function App() {
   return (
-    <section className="App">
+    <section className="App bg-red-300 px-32">
       <Header />
       <Outlet />
     </section>
