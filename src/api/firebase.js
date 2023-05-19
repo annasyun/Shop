@@ -19,18 +19,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider(); // provider를 구글로 설정
 
-export async function login() {
-  return signInWithPopup(auth, provider) // popup을 이용한 signup
-    .then((data) => {
-      const user = data.user;
-      console.log(user); // user data 출력
-      return user;
-    })
+export function login() {
+  signInWithPopup(auth, provider) // popup을 이용한 signup
     .catch(console.error);
 }
 
-export async function logout() {
-  return signOut(auth).then(() => null);
+export function logout() {
+  signOut(auth).catch(console.error);
 }
 
 export function onUserStateChange(callback) {

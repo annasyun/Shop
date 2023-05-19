@@ -4,23 +4,14 @@ import { AiOutlineShopping } from "react-icons/ai";
 import { BsCart, BsPencilFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { login, logout, onUserStateChange } from "../api/firebase";
+import UserProfile from "./UserProfile";
 
 export default function Header() {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    onUserStateChange((user) => {
-      console.log(user);
-      setUserData(user);
-    });
+    onUserStateChange(setUserData);
   }, []);
-
-  const handleLogin = () => {
-    login().then(setUserData);
-  };
-  const handleLogout = () => {
-    logout().then(setUserData);
-  };
 
   const cartItemCount = 2; // 실제로는 상품 개수를 동적으로 가져와야 함.
 
@@ -55,15 +46,16 @@ export default function Header() {
             </Link>
           </li>
           <li className="flex items-center space-x-2">
-            {userData && (
+            {/* {userData && (
               <>
                 <img src={userData.photoURL} alt="" className="w-7" />
                 <span>{userData.displayName}</span>
               </>
-            )}
+            )} */}
+            {userData && <UserProfile userData={userData} />}
             {!userData && (
               <button
-                onClick={handleLogin}
+                onClick={login}
                 className="bg-red-400 text-white p-2 px-4 rounded-md"
               >
                 Login
@@ -71,7 +63,7 @@ export default function Header() {
             )}
             {userData && (
               <button
-                onClick={handleLogout}
+                onClick={logout}
                 className="bg-red-400 text-white p-2 px-4 rounded-md"
               >
                 Logout
