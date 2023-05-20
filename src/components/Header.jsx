@@ -8,12 +8,11 @@ import UserProfile from "./UserProfile";
 import Cart from "./Cart";
 
 export default function Header() {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     onUserStateChange(setUserData);
   }, []);
-
   return (
     <header className="flex justify-between border-b border-gray-300 bg-slate-400 cursor-pointer p-2">
       {/* 로고 */}
@@ -34,13 +33,14 @@ export default function Header() {
               <Cart />
             </li>
           )}
-          {userData && (
+          {userData &&
+          userData.uid == process.env.REACT_APP_FIREBASE_ADMIN_ID ? (
             <li>
               <Link to={"products/new"}>
                 <BsPencilFill />
               </Link>
             </li>
-          )}
+          ) : null}
           <li className="flex items-center space-x-2">
             {userData && <UserProfile userData={userData} />}
             {!userData && (
