@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { AiOutlineShopping } from "react-icons/ai";
-import { BsCart, BsPencilFill } from "react-icons/bs";
+import { BsPencilFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { login, logout, onUserStateChange } from "../api/firebase";
 import UserProfile from "./UserProfile";
+import Cart from "./Cart";
 
 export default function Header() {
   const [userData, setUserData] = useState();
@@ -12,8 +13,6 @@ export default function Header() {
   useEffect(() => {
     onUserStateChange(setUserData);
   }, []);
-
-  const cartItemCount = 2; // 실제로는 상품 개수를 동적으로 가져와야 함.
 
   return (
     <header className="flex justify-between border-b border-gray-300 bg-slate-400 cursor-pointer p-2">
@@ -30,28 +29,19 @@ export default function Header() {
             <Link to={"/products"}>Products</Link>
           </li>
           {/* 장바구니 */}
-          <li className="relative">
-            <Link to={"/cart"}>
-              <BsCart className="text-2xl" />
-              {cartItemCount > 0 && (
-                <span className="bg-red-400 absolute -top-0.5 -right-0.5 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
-                  {cartItemCount}
-                </span>
-              )}
-            </Link>
-          </li>
-          <li>
-            <Link to={"products/new"}>
-              <BsPencilFill />
-            </Link>
-          </li>
+          {userData && (
+            <li>
+              <Cart />
+            </li>
+          )}
+          {userData && (
+            <li>
+              <Link to={"products/new"}>
+                <BsPencilFill />
+              </Link>
+            </li>
+          )}
           <li className="flex items-center space-x-2">
-            {/* {userData && (
-              <>
-                <img src={userData.photoURL} alt="" className="w-7" />
-                <span>{userData.displayName}</span>
-              </>
-            )} */}
             {userData && <UserProfile userData={userData} />}
             {!userData && (
               <button
