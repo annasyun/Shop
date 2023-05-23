@@ -1,18 +1,13 @@
-import { useState, useEffect } from "react";
 import React from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 import { BsPencilFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { login, logout, onUserStateChange } from "../api/firebase";
 import UserProfile from "./UserProfile";
-import Cart from "./Cart";
+import Button from "./ui/Button";
+import { useAuthContext } from "./context/AuthContext";
 
 export default function Header() {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    onUserStateChange(setUserData);
-  }, []);
+  const { userData, login, logout } = useAuthContext();
   return (
     <header className="flex justify-between border-b border-gray-300 bg-slate-400 cursor-pointer p-2">
       {/* 로고 */}
@@ -30,35 +25,20 @@ export default function Header() {
           {/* 장바구니 */}
           {userData && (
             <li>
-              <Cart />
+              <Link to={"/cart"}>Carts</Link>
             </li>
           )}
-          {userData &&
-          userData.uid == process.env.REACT_APP_FIREBASE_ADMIN_ID ? (
+          {userData && userData.isAdmin && (
             <li>
               <Link to={"products/new"}>
                 <BsPencilFill />
               </Link>
             </li>
-          ) : null}
+          )}
           <li className="flex items-center space-x-2">
             {userData && <UserProfile userData={userData} />}
-            {!userData && (
-              <button
-                onClick={login}
-                className="bg-red-400 text-white p-2 px-4 rounded-md"
-              >
-                Login
-              </button>
-            )}
-            {userData && (
-              <button
-                onClick={logout}
-                className="bg-red-400 text-white p-2 px-4 rounded-md"
-              >
-                Logout
-              </button>
-            )}
+            {!userData && <Button text={"Login"} onClick={login} />}
+            {userData && <Button text={"Logout"} onClick={logout} />}
           </li>
         </ul>
       </nav>
