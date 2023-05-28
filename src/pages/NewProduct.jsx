@@ -11,6 +11,7 @@ export default function NewProduct() {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [options, setOptions] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fileChange = async (e) => {
     const uploadUrl = await imgUploader(e);
@@ -29,6 +30,9 @@ export default function NewProduct() {
       description,
       options: options.split(","),
     }; // 폼 데이터를 Firebase에 저장
+
+    setIsSubmitting(true); // 등록 중 상태로 변경
+
     const newPostRef = push(ref(database, "posts"), formData)
       .then(() => {
         // 게시 성공 후 폼 초기화
@@ -41,6 +45,9 @@ export default function NewProduct() {
       })
       .catch((error) => {
         console.error("게시 오류: ", error);
+      })
+      .finally(() => {
+        setIsSubmitting(false); // 등록 완료 후 상태 변경
       });
   };
 
@@ -104,7 +111,9 @@ export default function NewProduct() {
             />
           </label>
         </p>
-        <button type="submit">제품 등록하기</button>
+        <button type="submit">
+          {isSubmitting ? "제품 등록 중입니다..." : "제품 등록하기"}
+        </button>
       </fieldset>
     </form>
   );
