@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { imgUploader } from "../api/cloudinary";
 import { getDatabase, ref, push } from "firebase/database";
 
@@ -12,6 +12,7 @@ export default function NewProduct() {
   const [description, setDescription] = useState("");
   const [options, setOptions] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const fileChange = async (e) => {
     const uploadUrl = await imgUploader(e);
@@ -42,7 +43,13 @@ export default function NewProduct() {
         setCategory("");
         setDescription("");
         setOptions("");
+        setShowSuccessMessage(true); // 메시지 표시 상태로 변경
+        const fileInput = document.getElementById("file-input");
+        if (fileInput) {
+          fileInput.value = null;
+        }
       })
+
       .catch((error) => {
         console.error("게시 오류: ", error);
       })
@@ -51,10 +58,22 @@ export default function NewProduct() {
       });
   };
 
+  useEffect(() => {
+    if (showSuccessMessage) {
+      const timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessMessage]);
+
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>새로운 제품 등록</legend>
+        {showSuccessMessage && <p>제품 등록이 완료되었습니다!</p>}
+
         {imageUrl ? (
           <img src={imageUrl} className="w-1/4" />
         ) : (
@@ -62,7 +81,12 @@ export default function NewProduct() {
         )}
         <p>
           <label>
-            <input type="file" accept="image/*" onChange={fileChange} />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={fileChange}
+            />
           </label>
         </p>
         <p>
