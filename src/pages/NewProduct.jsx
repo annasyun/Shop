@@ -26,7 +26,7 @@ export default function NewProduct() {
     const formData = {
       imageUrl,
       productName,
-      price,
+      price: parseInt(price),
       category,
       description,
       options: options.split(","),
