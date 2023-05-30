@@ -42,6 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-router-dom", "virtual:6a03553e683393ac221b9fc43ab24c83fb02723e1d8bba701ca1e5747923f9d97f3587b6ea63e3ea3e4dddbd3bf0ff7b078968dad4fc5f92dd908414c27eef3c#npm:6.11.1"],\
             ["react-scripts", "virtual:6a03553e683393ac221b9fc43ab24c83fb02723e1d8bba701ca1e5747923f9d97f3587b6ea63e3ea3e4dddbd3bf0ff7b078968dad4fc5f92dd908414c27eef3c#npm:5.0.1"],\
             ["tailwindcss", "npm:3.3.2"],\
+            ["uuid", "npm:9.0.0"],\
             ["web-vitals", "npm:2.1.4"]\
           ],\
           "linkType": "SOFT"\
@@ -16974,6 +16975,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-router-dom", "virtual:6a03553e683393ac221b9fc43ab24c83fb02723e1d8bba701ca1e5747923f9d97f3587b6ea63e3ea3e4dddbd3bf0ff7b078968dad4fc5f92dd908414c27eef3c#npm:6.11.1"],\
             ["react-scripts", "virtual:6a03553e683393ac221b9fc43ab24c83fb02723e1d8bba701ca1e5747923f9d97f3587b6ea63e3ea3e4dddbd3bf0ff7b078968dad4fc5f92dd908414c27eef3c#npm:5.0.1"],\
             ["tailwindcss", "npm:3.3.2"],\
+            ["uuid", "npm:9.0.0"],\
             ["web-vitals", "npm:2.1.4"]\
           ],\
           "linkType": "SOFT"\
@@ -18273,6 +18275,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
           "packageDependencies": [\
             ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.0.0", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-9.0.0-46c41e3e43-8dd2c83c43.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
+import ProductCard from "../components/ProductCard";
 
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const database = getDatabase();
-    const postsRef = ref(database, "posts");
+    const postsRef = ref(database, "products");
 
     // 데이터 변경 감지
     onValue(postsRef, (snapshot) => {
@@ -22,17 +23,10 @@ export default function AllProducts() {
   return (
     <div>
       <h2>All Products</h2>
-      <ul>
+      <ul className="grid grid-cols-3 gap-2">
         {products.map((product) => (
-          <li key={product.productId}>
-            <div>
-              <img src={product.imageUrl} alt={product.productName} />
-              <h3>{product.productName}</h3>
-              <p>Price: {product.price}</p>
-              <p>Category: {product.category}</p>
-              <p>Description: {product.description}</p>
-              <p>Options: {product.options.join(", ")}</p>
-            </div>
+          <li key={product.id}>
+            <ProductCard product={product} />
           </li>
         ))}
       </ul>

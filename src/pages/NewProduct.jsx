@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { imgUploader } from "../api/cloudinary";
 import { getDatabase, ref, push } from "firebase/database";
+import { v4 as uuid } from "uuid";
 
 const database = getDatabase();
 
@@ -33,8 +34,11 @@ export default function NewProduct() {
     }; // 폼 데이터를 Firebase에 저장
 
     setIsSubmitting(true); // 등록 중 상태로 변경
-
-    const newPostRef = push(ref(database, "posts"), formData)
+    const id = uuid();
+    const newPostRef = push(ref(database, "products"), {
+      ...formData,
+      id: id,
+    })
       .then(() => {
         // 게시 성공 후 폼 초기화
         setImageUrl("");
