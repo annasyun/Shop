@@ -16,7 +16,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 const provider = new GoogleAuthProvider(); // provider를 구글로 설정
 const database = getDatabase(app);
 
@@ -45,4 +45,35 @@ async function adminUser(user) {
     }
     return user;
   });
+}
+
+export async function getAllProducts() {
+  try {
+    const snapshot = await get(ref(database, "products"));
+    const data = snapshot.val();
+    if (data) {
+      const products = Object.values(data);
+      return products;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch products");
+  }
+}
+
+export async function getProductById(id) {
+  try {
+    const snapshot = await get(ref(database, "products"));
+    const data = snapshot.val();
+    if (data) {
+      const products = Object.values(data);
+      const product = products.find((product) => product.id === id);
+      return product;
+    } else {
+      throw new Error("Product not found");
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch product");
+  }
 }
