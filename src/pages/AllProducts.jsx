@@ -28,7 +28,7 @@ export default function AllProducts() {
             key={product.id}
             className="rounded-lg shadow-md overflow-hidden cursor-pointer"
           >
-            <ProductCard product={product} />
+            <ProductCard product={product}/>
           </li>
         ))}
       </ul>
