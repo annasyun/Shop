@@ -139,3 +139,7 @@ table {
   margin: -1px;
   overflow: hidden;
 }
+
+input {
+  @apply outline-none border border-gray-300 my-1 w-full p-10;
+}

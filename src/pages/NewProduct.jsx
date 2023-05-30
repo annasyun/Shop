@@ -69,76 +69,80 @@ export default function NewProduct() {
   }, [showSuccessMessage]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>새로운 제품 등록</legend>
-        {showSuccessMessage && <p>제품 등록이 완료되었습니다!</p>}
+    <section className="w-full text-center">
+      <h2 className="ir">새로운 제품 등록</h2>
+      <form onSubmit={handleSubmit}>
+        <fieldset className="flex flex-col px-12">
+          <legend className="text-2xl font-bold my-4">새로운 제품 등록</legend>
+          {showSuccessMessage && (
+            <p className="my-2">제품 등록이 완료되었습니다!</p>
+          )}
 
-        {imageUrl ? (
-          <img src={imageUrl} className="w-1/4" />
-        ) : (
-          <p>상품 이미지를 업로드 해주세요</p>
-        )}
-        <p>
+          {imageUrl ? (
+            <img src={imageUrl} className="w-96 mx-auto mb-2" />
+          ) : (
+            <p>상품 이미지를 업로드 해주세요</p>
+          )}
           <label>
             <input
+              className="p-4"
               id="file-input"
               type="file"
               accept="image/*"
+              required
               onChange={fileChange}
             />
           </label>
-        </p>
-        <p>
           <label>
             <input
+              className="p-4"
               placeholder="제품명"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
           </label>
-        </p>
-        <p>
           <label>
             <input
+              className="p-4"
               placeholder="가격"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
-        </p>
-        <p>
           <label>
             <input
+              className="p-4"
               placeholder="카테고리"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />
           </label>
-        </p>
-        <p>
           <label>
             <input
+              className="p-4"
               placeholder="제품 설명"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
-        </p>
-        <p>
           <label>
             <input
+              className="p-4"
               placeholder="옵션들(콤마(,)로 구분)"
               value={options}
               onChange={(e) => setOptions(e.target.value)}
             />
           </label>
-        </p>
-        <button type="submit">
-          {isSubmitting ? "제품 등록 중입니다..." : "제품 등록하기"}
-        </button>
-      </fieldset>
-    </form>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-brand text-white p-2"
+          >
+            {isSubmitting ? "제품 등록 중입니다..." : "제품 등록하기"}
+          </button>
+        </fieldset>
+      </form>
+    </section>
   );
 }

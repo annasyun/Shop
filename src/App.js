@@ -8,7 +8,7 @@ function App() {
   const [login, setLogin] = useState(false);
 
   return (
-    <section className="App bg-red-300">
+    <section className="App">
       <AuthContextProvider>
         <Header setLogin={setLogin} />
         <Outlet login={login} setLogin={setLogin} />

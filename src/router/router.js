@@ -6,6 +6,7 @@ import ProductDetail from "../pages/ProductDetail";
 import NewProduct from "../pages/NewProduct";
 import Cart from "../pages/Cart";
 import ProtectedRoute from "../components/ProtectedRoute";
+import Main from "../pages/Main";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, path: "/", element: <AllProducts /> },
+      { index: true, path: "/", element: <Main /> },
       { path: "/products", element: <AllProducts /> },
       { path: "/products/:id", element: <ProductDetail /> },
       {
