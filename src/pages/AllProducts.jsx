@@ -25,7 +25,7 @@ export default function AllProducts() {
         {products.map((product) => (
           <li
             key={product.id}
-            className="rounded-lg shadow-md overflow-hidden cursor-pointer"
+            className="rounded-lg shadow-md overflow-hidden cursor-pointer transition-all hover:scale-105"
           >
             <ProductCard product={product} />
           </li>
