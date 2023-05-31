@@ -15,10 +15,12 @@ function ProductDetail() {
     enabled: !!id, // id 값이 존재할 때만 쿼리 실행
   });
 
-  const [showOptions, setShowOptions] = useState(false);
+  const [selected, setSelected] = useState(
+    product?.options && product.options[0] ? product.options[0] : ""
+  );
 
-  const toggleOptions = () => {
-    setShowOptions((prev) => !prev);
+  const handleSelected = (e) => {
+    setSelected(e.target.value);
   };
 
   if (isLoading) {
@@ -32,9 +34,6 @@ function ProductDetail() {
   if (!product) {
     return <div>Product not found</div>;
   }
-
-  const firstOption = product.options[0];
-  const remainingOptions = product.options.slice(1);
 
   // product를 사용하여 상세 페이지를 구성
   return (
@@ -53,16 +52,12 @@ function ProductDetail() {
           </p>
           <p className="text-gray-600 mb-2">{product.description}</p>
           <div className="mb-2">
-            <p className="cursor-pointer" onClick={toggleOptions}>
-              옵션: {firstOption}
-            </p>
-            {showOptions && (
-              <ul className="pl-4">
-                {remainingOptions.map((option) => (
-                  <li key={option}>{option}</li>
-                ))}
-              </ul>
-            )}
+            <p>옵션:</p>
+            <select onChange={handleSelected} value={selected}>
+              {product.options?.map((option, index) => (
+                <option key={index}>{option}</option>
+              ))}
+            </select>
           </div>
           <Button className="w-full" text={"장바구니에 추가"} />
         </div>
