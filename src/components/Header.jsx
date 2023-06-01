@@ -5,27 +5,24 @@ import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import Button from "./ui/Button";
 import { useAuthContext } from "../context/AuthContext";
+import CartStatus from './CartStatus';
 
 export default function Header() {
   const { userData, login, logout } = useAuthContext();
   return (
     <header className="flex justify-between border-b border-gray-300 bg-slate-400 cursor-pointer p-2">
-      {/* 로고 */}
       <Link to={"/"} className="flex items-center text-brand">
         <AiOutlineShopping className="text-4xl" />
         <h1 className="text-2xl">Shop</h1>
       </Link>
-      {/* 상품 보기, 장바구니, 로그인 및 유저 정보 */}
       <nav>
         <ul className="flex items-center bg-amber-300 gap-4 font-semibold">
-          {/* 상품 보기 */}
           <li>
             <Link to={"/products"}>Products</Link>
           </li>
-          {/* 장바구니 */}
           {userData && (
             <li>
-              <Link to={"/cart"}>Carts</Link>
+              <Link to={"/cart"}><CartStatus/></Link>
             </li>
           )}
           {userData && userData.isAdmin && (
