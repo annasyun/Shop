@@ -6,7 +6,17 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getDatabase, ref, get } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  update,
+  query,
+  orderByChild,
+  equalTo,
+  get,
+} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -76,4 +86,27 @@ export async function getProductById(id) {
   } catch (error) {
     throw new Error("Failed to fetch product");
   }
+}
+
+export function addToCart(
+  productId,
+  productName,
+  imgUrl,
+  selectedOption,
+  price
+) {
+  const cartItemRef = ref(database, "cartItems");
+  const newCartItemRef = push(cartItemRef);
+  const newCartItemKey = newCartItemRef.key;
+
+  const cartItemData = {
+    productId,
+    productName,
+    imgUrl,
+    selectedOption,
+    price,
+    // 추가적인 필드나 정보를 저장할 수 있습니다.
+  };
+
+  set(newCartItemRef, cartItemData);
 }
