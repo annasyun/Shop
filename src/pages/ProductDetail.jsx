@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { addToCart, getProductById } from "../api/firebase";
+import { addOrUpdateToCart, addToCart, getProductById } from "../api/firebase";
 import { useParams } from "react-router-dom";
 import Button from "../components/ui/Button";
+import { useAuthContext } from "../context/AuthContext";
 
 function ProductDetail() {
   const { id } = useParams();
+  const { uid } = useAuthContext();
 
   const {
     data: product,
@@ -24,16 +26,17 @@ function ProductDetail() {
   };
 
   const handleClick = () => {
-    // 장바구니에 상품 추가
     const selectedOption =
       selected || (product?.options && product.options[0]) || "";
-    addToCart(
-      product.id,
-      product.productName,
-      product.imageUrl,
-      selectedOption,
-      product.price
-    );
+    const productData = {
+      id: product.id,
+      imageUrl: product.imageUrl,
+      productName: product.productName,
+      price: product.price,
+      option: selectedOption,
+      quantity: 1,
+    };
+    addOrUpdateToCart(uid, productData);
   };
 
   if (isLoading) {

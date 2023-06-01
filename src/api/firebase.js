@@ -16,6 +16,7 @@ import {
   orderByChild,
   equalTo,
   get,
+  remove,
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -88,25 +89,40 @@ export async function getProductById(id) {
   }
 }
 
-export function addToCart(
-  productId,
-  productName,
-  imgUrl,
-  selectedOption,
-  price
-) {
-  const cartItemRef = ref(database, "cartItems");
-  const newCartItemRef = push(cartItemRef);
-  const newCartItemKey = newCartItemRef.key;
+// export function addToCart(
+//   productId,
+//   productName,
+//   imgUrl,
+//   selectedOption,
+//   price
+// ) {
+//   const cartItemRef = ref(database, "cartItems");
+//   const newCartItemRef = push(cartItemRef);
+//   const newCartItemKey = newCartItemRef.key;
 
-  const cartItemData = {
-    productId,
-    productName,
-    imgUrl,
-    selectedOption,
-    price,
-    // 추가적인 필드나 정보를 저장할 수 있습니다.
-  };
+//   const cartItemData = {
+//     productId,
+//     productName,
+//     imgUrl,
+//     selectedOption,
+//     price,
+//     // 추가적인 필드나 정보를 저장할 수 있습니다.
+//   };
 
-  set(newCartItemRef, cartItemData);
+//   set(newCartItemRef, cartItemData);
+// }
+
+export async function getCart(userId) {
+  return get(ref(database, `carts/${userId}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    return Object.values(items);
+  });
+}
+
+export async function addOrUpdateToCart(userId, product) {
+  return set(ref(database, `carts/${userId}/${product.id}`), product);
+}
+
+export async function removeFromCart(userId, productId) {
+  return remove(ref(database, `carts/${userId}/${productId}`));
 }
